@@ -76,7 +76,7 @@ A FastAPI service that creates educational games with AI-generated distractor te
    DATABASE_URL=mssql+pymssql://sa:YourStrong%40Passw0rd@localhost:1433/GameAPI
    
    # LLM Configuration  
-   GEMINI_API_KEY=AIzaSyAKR22HRYWLB20AYsL0_5GTJjkrEyDPyOM
+   GEMINI_API_KEY=your_gemini_key
    LLM_PROVIDER=gemini
    
    # Application Configuration
