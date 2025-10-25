@@ -3,24 +3,24 @@
 echo "Starting Game Creation API with MSSQL..."
 
 # Check if Docker is running
-if ! docker info > /dev/null 2>&1; then
+if ! sudo docker info > /dev/null 2>&1; then
     echo "ERROR: Docker is not running. Please start Docker first."
     exit 1
 fi
 
 # Check if MSSQL container exists and start it
-if docker ps -a --format "table {{.Names}}" | grep -q "mssql_server"; then
+if sudo docker ps -a --format "table {{.Names}}" | grep -q "mssql_server"; then
     echo "Starting existing MSSQL container..."
-    docker start mssql_server
+    sudo docker start mssql_server
 else
     echo "Creating new MSSQL container..."
-    docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Passw0rd" -e "MSSQL_PID=Express" -p 1433:1433 --name mssql_server -d mcr.microsoft.com/mssql/server:2019-latest
+    sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrongPassword123" -e "MSSQL_PID=Express" -p 1433:1433 --name mssql_server -d mcr.microsoft.com/mssql/server:2019-latest
     
-    echo "Waiting for SQL Server to start (30 seconds)..."
-    sleep 30
+    echo "Waiting for SQL Server to start (60 seconds)..."
+    sleep 60
     
     echo "Creating GameAPI database..."
-    docker exec mssql_server /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrong@Passw0rd" -C -Q "CREATE DATABASE GameAPI;" || echo "Database might already exist"
+    sudo docker exec mssql_server /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "YourStrongPassword123" -C -Q "CREATE DATABASE GameAPI;" || echo "Database might already exist"
 fi
 
 # Wait a bit for SQL Server to be ready
